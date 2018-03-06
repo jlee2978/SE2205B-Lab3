@@ -18,9 +18,13 @@ public class LinesToDisplay {
      */
     public LinesToDisplay() {
         //ADD CODE FOR THE CONSTRUCTOR
-
-
-
+        lines = (AList<Wordlet>[]) new AList[LINES];
+        
+        for (int i = 0; i < LINES; i++)
+        {
+            lines[i] = new AList();
+        }
+        currentLine = 0;
     }
 
     /**
@@ -29,7 +33,7 @@ public class LinesToDisplay {
      */
     public void addWordlet(Wordlet w) {
         //ADD CODE HERE TO ADD A WORDLET TO THE CURRENT LINE
-
+        lines[currentLine].add(w);
 
     }
 
@@ -40,7 +44,28 @@ public class LinesToDisplay {
      */
     public void nextLine() {
         //ADD CODE TO HANDLE THE NEXT LINE
-
+        if (currentLine == LINES - 1) {
+            // currentLine reaches the max line
+            
+            for(int i = 0; i < LINES - 1; i++) {
+                // clear all words in lines[l]
+                lines[i].clear();
+                  
+                // get the iterator for lines[l+1]
+                Iterator<Wordlet> iter = lines[i + 1].getIterator();
+                
+                while (iter.hasNext()) {
+                    // add the word from lines[l+1] to lines[l]
+                    lines[i].add(iter.next());
+                }                                    
+            }
+            
+            // clear all words from lines[currentLine]
+            lines[currentLine].clear();
+        }
+        else {
+            currentLine++;
+        }
     }
 
       

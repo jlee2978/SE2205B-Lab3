@@ -40,8 +40,15 @@ public class MisspellActionThread implements Runnable {
     public void run() {
 
         // ADD CODE HERE TO LOAD DICTIONARY
-
-
+        /*myLines.addWordlet(new Wordlet("abc", true));
+        myLines.nextLine();
+        showLines(myLines);
+        myLines.addWordlet(new Wordlet("def", false));
+        showLines(myLines);
+        myLines.nextLine();*/
+        
+        
+        loadDictionary(dictionaryFileName, myDictionary);
         Platform.runLater(() -> {
             if (dictionaryLoaded) {
                controller.SetMsg("The Dictionary has been loaded"); 
@@ -71,8 +78,17 @@ public class MisspellActionThread implements Runnable {
             input = new Scanner(new File(theFileName));
 
             // ADD CODE HERE TO READ WORDS INTO THE DICTIONARY     
-
-            
+            while(input.hasNext())
+            {
+                inString = input.next();
+                
+                //the key and value are the same
+                correctWord = inString;
+                
+                //add the key and value to the dictionary
+                theDictionary.add(inString, correctWord);
+            }
+            dictionaryLoaded = true;
             
         } catch (IOException e) {
             System.out.println("There was an error in reading or opening the file: " + theFileName);
