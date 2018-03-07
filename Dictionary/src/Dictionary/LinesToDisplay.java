@@ -44,10 +44,12 @@ public class LinesToDisplay {
      */
     public void nextLine() {
         //ADD CODE TO HANDLE THE NEXT LINE
-        if (currentLine == LINES - 1) {
+        if (currentLine == LINES - 1) 
+        {
             // currentLine reaches the max line
             
-            for(int i = 0; i < LINES - 1; i++) {
+            for(int i = 0; i < LINES - 1; i++) 
+            {
                 // clear all words in lines[l]
                 lines[i].clear();
                   
@@ -63,7 +65,8 @@ public class LinesToDisplay {
             // clear all words from lines[currentLine]
             lines[currentLine].clear();
         }
-        else {
+        else 
+        {
             currentLine++;
         }
     }

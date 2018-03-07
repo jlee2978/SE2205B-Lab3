@@ -58,7 +58,9 @@ public class MisspellActionThread implements Runnable {
         });
         
         // ADD CODE HERE TO CALL checkWords
-        
+        // call checkWords to the words in textFileName
+        checkWords(textFileName, myDictionary);
+
 
     }
 
@@ -158,7 +160,7 @@ public class MisspellActionThread implements Runnable {
             
             // show the last line
             showLines(myLines);
-
+            
             // this is an indication of stop to showLines 
             myLines = null;  
             
@@ -196,6 +198,5 @@ public class MisspellActionThread implements Runnable {
         } catch (InterruptedException ex) {
         }
     }
-
 } // end class MisspellActionThread
 
