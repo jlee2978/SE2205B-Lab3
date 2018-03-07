@@ -56,7 +56,8 @@ public class LinesToDisplay {
                 // get the iterator for lines[l+1]
                 Iterator<Wordlet> iter = lines[i + 1].getIterator();
                 
-                while (iter.hasNext()) {
+                while (iter.hasNext()) 
+                {
                     // add the word from lines[l+1] to lines[l]
                     lines[i].add(iter.next());
                 }                                    

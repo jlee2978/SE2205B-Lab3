@@ -183,7 +183,8 @@ public class MisspellActionThread implements Runnable {
         Iterator<String> values = theDictionary.getValueIterator();
         
         // while there is a word in the dictionary and the result is false
-        while (values.hasNext() && result == false) {
+        while (values.hasNext() && result == false) 
+        {
             result = (values.next().equals(word));
         }
 
