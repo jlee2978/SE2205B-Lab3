@@ -110,8 +110,57 @@ public class MisspellActionThread implements Runnable {
 
             input = new Scanner(new File(theFileName));
             // ADD CODE HERE    
+            boolean spellingCorrect = true;
+ 
+            // while there is a line input
+            while (input.hasNextLine()) 
+            {
+                // read a line from the file
+                inString = input.nextLine();
 
+                // set the tokenizer for inString
+                StringTokenizer tokenizer = new StringTokenizer(inString);
+                
+                // while there is a token
+                while (tokenizer.hasMoreTokens()) 
+                {
+                    // get a word
+                    aWord = tokenizer.nextToken();
+                    
+                    // assume that it is spelt correctly
+                    spellingCorrect = true;
+                    
+                    // check if we need to call spell check
+                    for(int i = 0; i < aWord.length(); i++) 
+                    {
+                        char c = aWord.charAt(i);
+                        
+                        if (Character.isLetter(c)) {
+                            // if a letter is found, check the word
+                            // then break
+                            spellingCorrect = checkWord(aWord, theDictionary);
+                            break;
+                        }
+                    }
+                    
+                    // set up wordlet
+                    Wordlet wordlet = new Wordlet(aWord + " ", spellingCorrect);
+                    
+                    // add wordlet to mylines
+                    myLines.addWordlet(wordlet);
+                }
+                
+                showLines(myLines);
+                
+                // process nextline
+                myLines.nextLine();
+            }
             
+            // show the last line
+            showLines(myLines);
+
+            // this is an indication of stop to showLines 
+            myLines = null;  
             
         } catch (IOException e) {
             System.out.println("There was an error in reading or opening the file: " + theFileName);
