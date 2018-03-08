@@ -112,46 +112,51 @@ public class MisspellActionThread implements Runnable {
 
             input = new Scanner(new File(theFileName));
             // ADD CODE HERE    
-            boolean spellingCorrect = true;
+            int p;
+            char c;
+            boolean punctuationOnly;
+            Wordlet wordlet;       
  
             // while there is a line input
-            while (input.hasNextLine()) 
-            {
+            while (input.hasNextLine()) {
                 // read a line from the file
                 inString = input.nextLine();
 
                 // set the tokenizer for inString
-                StringTokenizer tokenizer = new StringTokenizer(inString);
-                
+                StringTokenizer tokenizer = new StringTokenizer(inString, "(),.!? \"", true);
+                              
                 // while there is a token
-                while (tokenizer.hasMoreTokens()) 
-                {
-                    // get a word
+                while (tokenizer.hasMoreTokens()) {
+                   
+                    // get a word which may have punctuation marks before or after a word
                     aWord = tokenizer.nextToken();
                     
-                    // assume that it is spelt correctly
-                    spellingCorrect = true;
-                    
-                    // check if we need to call spell check
-                    for(int i = 0; i < aWord.length(); i++) 
-                    {
-                        char c = aWord.charAt(i);
-                        
+                    // assume aWord contains punctuation only
+                    punctuationOnly = true; 
+                    for(int i=0; i < aWord.length(); i++) {
+                        c = aWord.charAt(0);
                         if (Character.isLetter(c)) {
-                            // if a letter is found, check the word
-                            // then break
-                            spellingCorrect = checkWord(aWord, theDictionary);
+                            // letter is found, aWord doesn't contain punctuation only.
+                            // can break the loop
+                            punctuationOnly = false;
                             break;
                         }
                     }
                     
-                    // set up wordlet
-                    Wordlet wordlet = new Wordlet(aWord + " ", spellingCorrect);
+                    if (punctuationOnly) {
+                        // punctuation only. so assume spelt correctly
+                        wordlet = new Wordlet(aWord, true);
+                    }
+                    else {
+                        wordlet = new Wordlet(aWord, checkWord(aWord, theDictionary));                        
+                    }
                     
-                    // add wordlet to mylines
+                    // add punctuation to mylines
                     myLines.addWordlet(wordlet);
-                }
+                    
+                 }
                 
+                // show the lines
                 showLines(myLines);
                 
                 // process nextline
@@ -160,9 +165,9 @@ public class MisspellActionThread implements Runnable {
             
             // show the last line
             showLines(myLines);
-            
+
             // this is an indication of stop to showLines 
-            myLines = null;  
+            myLines = null;
             
         } catch (IOException e) {
             System.out.println("There was an error in reading or opening the file: " + theFileName);
